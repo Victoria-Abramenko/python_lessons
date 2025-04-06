@@ -117,3 +117,79 @@
 #             exit()
 #
 #     clock.tick(FPS)
+
+# # _____ рисование графических примитивов _________
+# # pygame.draw.rect(surface,...) - рисование прямоугольника
+# # pygame.draw.line(surface,...) - рисование линии
+# # pygame.draw.aaline(surface,...) - рисование сглаженной линии
+# # pygame.draw.lines(surface,...) - рисование ломанной линии
+# # pygame.draw.aalines(surface,...) - рисование ломанной сглаженной линии
+# # pygame.draw.circle(surface,...) - рисование окружности
+# # pygame.draw.ellipse(surface,...) - рисование эллипса
+# # pygame.draw.arc(surface,...) - рисование дуги
+#
+# # направление осей x вправо y вниз
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+#
+# pygame.draw.rect(sc,(252, 125, 155), (10, 10, 50, 100)) # поверхность, цвет, размеры прямоугольника (x, y, width, height)
+# # но прямоугольника не будет видно, так как он рисуется на задней поверхности плоскости, поэтому ее необходимо перевернуть
+# pygame.display.flip()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+# # отрисовка происходит на задней стороне поверхности для того, чтобы визуально пользователь не видел отображения отрисовки,
+# # в случае анимации
+# # есть метод update он перерисовывает только ту область, которая указана в нем, если не указано - то вся клиентская область
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+#
+# pygame.draw.rect(sc,(252, 125, 155), (10, 10, 50, 100), 2) # если добавить еще 1 параметр, это будет толщина обводки
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+# # цвет также принято указывать в виде константы
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+#
+# PINK = (252, 125, 155)
+# BLUE = (2, 4, 250)
+# GREEN = (4, 245, 4)
+# RED = (250, 8, 16)
+# COP = (35, 41, 26)
+#
+# pygame.draw.rect(sc, PINK, (10, 10, 50, 100), 2)
+# pygame.draw.ellipse(sc, BLUE, (150, 150, 200, 300), 4)
+# pygame.draw.line(sc, GREEN, (120, 50), (180, 240), 5) # можно задать толщину
+# pygame.draw.aaline(sc, GREEN, (70, 40), (130, 230), 5) # начальные и конечные координаты, толщина будет не более 1px
+# pygame.draw.aalines(sc, RED, True, [(250, 60), (290, 90), (320, 70)], 3)
+# pygame.draw.lines(sc, RED, False, [(250, 120), (290, 140), (320, 120)], 3)
+# pygame.draw.polygon(sc, COP, [[420, 250], [400, 240], [430, 260], [410, 220], [450, 230]])
+# pygame.draw.polygon(sc, COP, [[320, 250], [300, 240], [330, 260], [310, 220], [350, 230]], 3)
+# pygame.draw.circle(sc, PINK, (500, 300), 40)
+# pi = 3.14
+# pygame.draw.arc(sc, BLUE, (450, 30, 50, 150), pi, 2 * pi, 5)  # прямоугольник в пределах которого рисуется, начальный угол, конечный угол, толщина
+#
+#
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
