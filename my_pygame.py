@@ -193,3 +193,140 @@
 #     for event in pygame.event.get():
 #         if event.type == pygame.QUIT:
 #             exit()
+
+
+# # __________  обработка событий клавиатуры  _________________________
+# # event.type == pygame.KEYDOWN  -  клавиша нажата
+# # event.type == pygame.KEYUP  -  клавиша отпущена
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 20
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.KEYDOWN:  # обработка событий нажатия клавиатуры
+#             if event.key == pygame.K_LEFT: # нажатие влево, смешаем по оси X влево
+#                 x -= speed
+#             elif event.key == pygame.K_RIGHT:  # нажатие вправо, смешаем по оси X вправо
+#                 x += speed
+#             elif event.key == pygame.K_UP:  # нажатие вверх, смешаем по оси X вверх
+#                 y -= speed
+#             elif event.key == pygame.K_DOWN:  # нажатие вниз, смешаем по оси X вниз
+#                 y += speed
+#
+#     sc.fill(BLUE)  # заливка поверхности определенным цветом
+#     pygame.draw.rect(sc, GREEN, (x, y, 50, 50))
+#     pygame.display.update()
+#     clock.tick(FPS)
+#
+# # чтобы добавить перемещение при зажатой клавише, необходимо сделать так, чтобы событие попадало в обработку событий
+# # до тех пор, пока клавиша удерживается нажатой
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+#
+# fl_left = fl_right = fl_up = fl_down = False  # создаем флаг, которой при не нажатой клавише имеет значение False
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.KEYDOWN:
+#             if event.key == pygame.K_LEFT:
+#                 fl_left = True  #  при нажатой клавише, значение флага будет True
+#             elif event.key == pygame.K_RIGHT:
+#                 fl_right = True
+#             elif event.key == pygame.K_UP:
+#                 fl_up = True
+#             elif event.key == pygame.K_DOWN:
+#                 fl_down = True
+#
+#         elif event.type == pygame.KEYUP:  # создаем проверку, чтобы изменить значение флага при отпускании клавиши
+#             if event.key in [pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN]:
+#                 fl_left = fl_right = fl_up = fl_down = False
+#
+#     # по этим флагам будем менять значение координаты
+#     if fl_left:
+#         x -= speed
+#     elif fl_right:
+#         x += speed
+#     elif fl_up:
+#         y -= speed
+#     elif fl_down:
+#         y += speed
+#
+#
+#
+#     sc.fill(BLUE)  # заливка поверхности определенным цветом
+#     pygame.draw.rect(sc, GREEN, (x, y, 50, 50))
+#     pygame.display.update()
+#     clock.tick(FPS)
+#
+# # в pygame есть модуль key, в котором есть метод get_pressed(), который возвращает состояние клавиш в виде кортежа
+# # pygame.K_RIGHT  - это константы, у каждой из которых есть свой индекс и по нему и определяется какая клавиша нажата (0, 0, 1, 0 ...)
+# # при помощи него можно реализовать данный функционал гораздо проще
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     keys = pygame.key.get_pressed()  # получаем коллекцию нажатых клавиш
+#
+#     if keys[pygame.K_LEFT]: # если нажата влево - смещаемся влево
+#         x -= speed
+#     elif keys[pygame.K_RIGHT]:
+#         x += speed
+#     elif keys[pygame.K_UP]:
+#         y -= speed
+#     elif keys[pygame.K_DOWN]:
+#         y += speed
+#
+#
+#     sc.fill(BLUE)
+#     pygame.draw.rect(sc, GREEN, (x, y, 50, 50))
+#     pygame.display.update()
+#     clock.tick(FPS)
+#
+# # но у этой функции нет идентификаторов для ctrl, shift, alt...
+# поэтому с ними необходимо использовать первый вариант
