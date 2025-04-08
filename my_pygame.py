@@ -330,3 +330,206 @@
 #
 # # но у этой функции нет идентификаторов для ctrl, shift, alt...
 # поэтому с ними необходимо использовать первый вариант
+
+# # ____________________  обработка событий от мышки ________________________
+# # pygame.MOUSEBUTTONDOWN - нажатие на кнопку мыши
+# # pygame.MOUSEBUTTONUP - отпускание кнопки мыши
+# # pygame.MOUSEBUTTONMOTION - перемещение курсора
+# # pygame.MOUSEBUTTONWHEEL - вращения колесиком
+# # .MOUSEBUTTONDOWN
+# # event.button : чтобы отследить кнопку мыши
+# # 1 - нажатие левой клавиши мыши
+# # 2 - нажатие средней клавиши мыши
+# # 3 - нажатие правой клавиши мыши
+# # 4 - вращение колесика вперед
+# # 5 - вращение колесика назад
+# # .MOUSEBUTTONMOTION
+# # event.pos : чтобы отследить позицию курсора - абсолютная позиция (относительно экрана)
+# # event.rel : относительная позиция (относительно предыдущей позиции)
+#
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# PINK = (242, 76, 90)
+#
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#         elif event.type == pygame.MOUSEBUTTONDOWN:
+#             print('мышка нажата', event.button)
+#         elif event.type == pygame.MOUSEMOTION:
+#             print('координаты курсора', event.rel)
+#
+#     sc.fill(BLUE)
+#     pygame.draw.rect(sc, GREEN, (x, y, 50, 50))
+#     pygame.display.update()
+#     clock.tick(FPS)
+# # ...
+# # координаты курсора (-1, -3)
+# # координаты курсора (-1, -2)
+# # мышка нажата 3
+# # мышка нажата 2
+# # координаты курсора (1, 0)
+# # ...
+#
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# PINK = (242, 76, 90)
+#
+# fl_start_draw = False # флаг для рисования
+# sp = ep = None # начальная и конечная координаты рисуемого прямоугольника
+#
+# sc.fill(BLUE)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: # отслеживаем нажатие левой кнопки мыши
+#             fl_start_draw = True  # флаг рисования изменяем на истина
+#             sp = event.pos  # начальная координата равна текущей позиции
+#
+#         elif event.type == pygame.MOUSEMOTION:  # обрабатываем перемещение курсора
+#             if fl_start_draw:  # Если флаг True
+#                 pos = event.pos
+#
+#                 width = pos[0] - sp[0]
+#                 height = pos[1] - sp[1]
+#
+#                 sc.fill(BLUE)  # снова закрашиваем клиентскую область, чтобы стереть предыдущий прямоугольник
+#                 pygame.draw.rect(sc, PINK, (sp[0], sp[1], width, height)) # рисуем прямоугольник заданной ширины
+#                 pygame.display.update()
+#
+#         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1: # отслеживание отпускания кнопки
+#             fl_start_draw = False # снова изменяем значение на False
+#
+#     clock.tick(FPS)
+#
+# # в комментариях предложен способ для отрисовывания и в отрицательную сторону
+
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# PINK = (242, 76, 90)
+#
+# fl_start_draw = False
+# sp = ep = None
+#
+# sc.fill(BLUE)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+#             fl_start_draw = True
+#             sp = event.pos
+#
+#         elif event.type == pygame.MOUSEMOTION:
+#             if fl_start_draw:
+#                 pos = event.pos
+#
+#                 x, y = min(sp[0], pos[0]), min(sp[1], pos[1])
+#
+#                 width = max(pos[0], sp[0]) - x
+#                 height = max(pos[1], sp[1]) - y
+#
+#                 sc.fill(BLUE)
+#                 pygame.draw.rect(sc, PINK, (x,y, width, height))
+#                 pygame.display.update()
+#
+#         elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+#             fl_start_draw = False
+#
+#     clock.tick(FPS)
+
+# # в pygame есть специальный модуль mouse - для отслеживаний событий мышки, метод get_pressed, она возвращает кортеж,
+# # какие кнопки нажаты (1, 0, 0)
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# x = W // 2
+# y = H // 2
+# speed = 10
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# PINK = (242, 76, 90)
+#
+#
+# sp = None
+#
+# sc.fill(BLUE)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     pressed = pygame.mouse.get_pressed()
+#     if pressed[0]:  # нажата ли левая кнопка мыши - индекс 0
+#         pos = pygame.mouse.get_pos()  # получает текущую позицию курсора
+#
+#         if sp is None: # значит мы еще не начали рисовать прямоугольник, а текущая позиция будет начальной
+#             sp = pos
+#         x, y = min(sp[0], pos[0]), min(sp[1], pos[1])
+#
+#         width = max(pos[0], sp[0]) - x
+#         height = max(pos[1], sp[1]) - y
+#
+#         sc.fill(BLUE)
+#         pygame.draw.rect(sc, PINK, (x,y, width, height))
+#         pygame.display.update()
+#     else: # сработает как только кнопка мыши будет отпущена
+#         sp = None
+#
+#     clock.tick(FPS)
+
+# в модуле mouse есть специальные функции?
+# set_visible со значением False скроет курсор мыши
