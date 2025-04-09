@@ -533,3 +533,117 @@
 
 # в модуле mouse есть специальные функции?
 # set_visible со значением False скроет курсор мыши
+
+# # ____________  поверхности в pygame  _________________
+# # клиентская область - базовая поверхность .set_mode((width, height))
+# # поверхность - .Surface((width, height)), чтобы ее закрасить также используется метод fill(color), а чтобы отобразить
+# # эту поверхность в клиентской области, используется метод blit(), к той переменной, которой была присвоена поверхность,
+# # в качестве параметров передаются - поверхность и координаты, где ее расположить.
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+#
+# sc.fill(BLUE)
+#
+# surf = pygame.Surface((200, 200))
+# surf.fill(GREEN)
+# sc.blit(surf, (50, 50))
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+#
+# # метод set_alpha задает степень прозрачности от 0 - 255 (прозрачная - непрозрачная)
+
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# sc.fill(BLUE)
+#
+# surf = pygame.Surface((200, 200))
+# surf.fill(GREEN)
+#
+# surf_alpha = pygame.Surface((W, 100))
+# pygame.draw.circle(surf_alpha, RED,(100, 100), 80)
+# surf_alpha.set_alpha(128)
+# surf.blit(surf_alpha, (0, 50))
+# sc.blit(surf, (50, 50))
+#
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+
+# # пример анимации поверхности
+# import pygame
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# sc.fill(BLUE)
+#
+# surf = pygame.Surface((W, 200))
+# bita = pygame.Surface((50, 10))
+#
+# surf.fill(GREEN)
+# bita.fill(RED)
+#
+# bx, by = 0, 150 # положение биты
+# x, y = 0, 0 # положение поверхности
+#
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     surf.fill(GREEN)  # закрашиваем поверхность
+#     surf.blit(bita, (bx, by))  # наносим на поверхность другую поверхность
+#
+#     if bx < W:
+#         bx += 5
+#     else:
+#         bx = 0
+#
+#     if y < H:
+#         y += 1
+#     else:
+#         y = 0
+#
+#     sc.fill(BLUE)
+#     sc.blit(surf, (x, y))
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
