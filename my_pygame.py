@@ -647,3 +647,79 @@
 #     pygame.display.update()
 #
 #     clock.tick(FPS)
+
+# # прямоугольная область Rect - это класс для обработки границ и столкновений, а не для рисования
+# import pygame
+#
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# hero = pygame.Surface((40, 50)) # создаем поверхность персонажа ширина 40px, высота 50px
+# hero.fill(GREEN)
+# rect = hero.get_rect()  # этот метод возвращает прямоугольник, который занимает эта поверхность
+# print(rect)
+#
+# sc.fill(BLUE)
+# sc.blit(hero, (100, 50))
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+#
+# #  у экземпляров класса Rect есть определенные свойства - координаты верхнего левого угла, а также точки углов и
+# #  середин всех граней прямоугольника
+# # (x, y)  |  top  |  topright
+# # left  |  center  |  right
+# # bottomleft  |  bottom  | bottomright
+# # можно методу get_rect() задать координаты topleft=(200, 50), по умолчанию (0, 0)
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# hero = pygame.Surface((40, 50)) #
+# hero.fill(GREEN)
+# # rect = hero.get_rect(topleft=(200, 50))
+# rect = hero.get_rect(center=( W // 2, H // 2)) # разместить этот прямоугольник по центру окна
+# print(rect)
+#
+# sc.fill(BLUE)
+# sc.blit(hero, rect)  # здесь уже не координаты, а полученный прямоугольник передаем в параметрах для позиционирования
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+
+# В классе Rect есть специальные методы
+# Rect.move(x, y) - возвращает новый прямоугольник со смещениями x, y
+# Rect.move_ip(x, y) - меняет координаты текущего прямоугольника со смещениями x, y
+# Rect.clip(Rect) - обрезает границы прямоугольника по указанным размерам переданного прямоугольника
+# Rect.union(Rect) - возвращает новый прямоугольник с результатами объединения двух прямоугольников
+# Rect.union_ip - объединяет два прямоугольника в один, меняет в текущем прямоугольнике
+# Rect.fit(Rect) - возвращает новый прямоугольник смещенный и обрезанный по размеру переданного прямоугольника
+# Rect.contains(Rect) - проверяет, содержится ли один прямоугольник внутри другого
