@@ -648,7 +648,7 @@
 #
 #     clock.tick(FPS)
 
-# # прямоугольная область Rect - это класс для обработки границ и столкновений, а не для рисования
+# # _____________прямоугольная область Rect - это класс для обработки границ и столкновений, а не для рисования ______
 # import pygame
 #
 #
@@ -685,6 +685,44 @@
 # # left  |  center  |  right
 # # bottomleft  |  bottom  | bottomright
 # # можно методу get_rect() задать координаты topleft=(200, 50), по умолчанию (0, 0)
+# # import pygame
+# #
+# # pygame.init()
+# #
+# # W,H = 600, 400
+# # sc = pygame.display.set_mode((W, H))
+# # FPS = 60
+# # clock = pygame.time.Clock()
+# #
+# # GREEN = (35, 41, 26)
+# # BLUE = (54, 158, 180)
+# # RED = (250, 100, 190)
+# #
+# # hero = pygame.Surface((40, 50)) #
+# # hero.fill(GREEN)
+# # # rect = hero.get_rect(topleft=(200, 50))
+# # rect = hero.get_rect(center=( W // 2, H // 2)) # разместить этот прямоугольник по центру окна
+# # print(rect)
+# #
+# # sc.fill(BLUE)
+# # sc.blit(hero, rect)  # здесь уже не координаты, а полученный прямоугольник передаем в параметрах для позиционирования
+# # pygame.display.update()
+# #
+# # while True:
+# #     for event in pygame.event.get():
+# #         if event.type == pygame.QUIT:
+# #             exit()
+# #
+# #     clock.tick(FPS)
+#
+# # В классе Rect есть специальные методы
+# # Rect.move(x, y) - возвращает новый прямоугольник со смещениями x, y
+# # Rect.move_ip(x, y) - меняет координаты текущего прямоугольника со смещениями x, y
+# # Rect.clip(Rect) - обрезает границы прямоугольника по указанным размерам переданного прямоугольника
+# # Rect.union(Rect) - возвращает новый прямоугольник с результатами объединения двух прямоугольников
+# # Rect.union_ip - объединяет два прямоугольника в один, меняет в текущем прямоугольнике
+# # Rect.fit(Rect) - возвращает новый прямоугольник смещенный и обрезанный по размеру переданного прямоугольника
+# # Rect.contains(Rect) - проверяет, содержится ли один прямоугольник внутри другого
 # import pygame
 #
 # pygame.init()
@@ -698,14 +736,15 @@
 # BLUE = (54, 158, 180)
 # RED = (250, 100, 190)
 #
-# hero = pygame.Surface((40, 50)) #
-# hero.fill(GREEN)
-# # rect = hero.get_rect(topleft=(200, 50))
-# rect = hero.get_rect(center=( W // 2, H // 2)) # разместить этот прямоугольник по центру окна
-# print(rect)
+# rect1 = pygame.Rect((0, 0, 30, 30))
+# rect2 = pygame.Rect((30, 30, 30, 30))
+#
+# rect2.move_ip(20, 20)
+# print(rect2)  # <rect(50, 50, 30, 30)>
+# rect3 = rect2.union(rect1)
+# print(rect3)  # <rect(0, 0, 80, 80)>
 #
 # sc.fill(BLUE)
-# sc.blit(hero, rect)  # здесь уже не координаты, а полученный прямоугольник передаем в параметрах для позиционирования
 # pygame.display.update()
 #
 # while True:
@@ -715,11 +754,112 @@
 #
 #     clock.tick(FPS)
 
-# В классе Rect есть специальные методы
-# Rect.move(x, y) - возвращает новый прямоугольник со смещениями x, y
-# Rect.move_ip(x, y) - меняет координаты текущего прямоугольника со смещениями x, y
-# Rect.clip(Rect) - обрезает границы прямоугольника по указанным размерам переданного прямоугольника
-# Rect.union(Rect) - возвращает новый прямоугольник с результатами объединения двух прямоугольников
-# Rect.union_ip - объединяет два прямоугольника в один, меняет в текущем прямоугольнике
-# Rect.fit(Rect) - возвращает новый прямоугольник смещенный и обрезанный по размеру переданного прямоугольника
-# Rect.contains(Rect) - проверяет, содержится ли один прямоугольник внутри другого
+# # имитация прыжка героя
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# ground = H - 70 # уровень земли
+# jump_force = 20  # сила прыжка
+# move = jump_force +  1  # текущая вертикальная скорость
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# hero = pygame.Surface((40, 50)) #
+# hero.fill(GREEN)
+# rect = hero.get_rect(centerx=W // 2) # разместить этого персонажа по центру окна по x
+# rect.bottom = ground # размещаем героя на поверхности земли
+#
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.KEYDOWN:
+#             if event.key == pygame.K_SPACE and ground == rect.bottom:
+#                 move = -jump_force
+#
+#     if move <= jump_force:
+#         if rect.bottom + move < ground:
+#             rect.bottom += move
+#             if move < jump_force:
+#                 move += 1  # замедление скорости прыжка
+#         else:
+#             rect.bottom = ground
+#             move = jump_force + 1
+#
+#     sc.fill(BLUE)
+#     sc.blit(hero, rect)
+#     pygame.display.update()
+#
+#
+#     clock.tick(FPS)
+#
+# #____________________ текст и шрифты. pygame.font ___________
+# # для этого в pygame используется модуль font, в котором определены некоторые свойства и функции:
+# # SysFont(имя шрифта, размер) - класс для предустановленного шрифта
+# # Font(путь, размер) - класс для загрузки шрифта по указанному пути
+# # get_fonts() - функция возвращающая имена предустановленных в системе шрифтов - коллекцию
+# # match_font(имя шрифта) - функция возвращающая путь к шрифту по его имени
+# import pygame
+#
+# pygame.init()
+#
+# print(pygame.font.get_fonts())
+# # ['arial', 'arialblack', 'bahnschrift', 'calibri', 'cambria', 'cambriamath', 'candara', 'comicsansms', 'consolas',
+# # 'constantia', 'corbel', 'couriernew', 'ebrima', 'franklingothicmedium', 'gabriola', 'gadugi', 'georgia', 'impact',
+# # 'inkfree', 'javanesetext', 'leelawadeeui', 'leelawadeeuisemilight', 'lucidaconsole', 'lucidasans', 'malgungothic',
+# # 'malgungothicsemilight', 'microsofthimalaya', 'microsoftjhenghei', 'microsoftjhengheiui', 'microsoftnewtailue',
+# # 'microsoftphagspa', 'microsoftsansserif', 'microsofttaile', 'microsoftyahei', 'microsoftyaheiui', 'microsoftyibaiti',
+# # 'mingliuextb', 'pmingliuextb', 'mingliuhkscsextb', 'mongolianbaiti', 'msgothic', 'msuigothic', 'mspgothic', 'mvboli',
+# # 'myanmartext', 'nirmalaui', 'nirmalauisemilight', 'palatinolinotype', 'sansserifcollection', 'segoefluenticons',
+# # 'segoemdl2assets', 'segoeprint', 'segoescript', 'segoeui', 'segoeuiblack', 'segoeuiemoji', 'segoeuihistoric',
+# # 'segoeuisemibold', 'segoeuisemilight', 'segoeuisymbol', 'segoeuivariable', 'simsun', 'nsimsun', 'simsunextb',
+# # 'sitkatext', 'sylfaen', 'symbol', 'tahoma', 'timesnewroman', 'trebuchetms', 'verdana', 'webdings', 'wingdings',
+# # 'yugothic', 'yugothicuisemibold', 'yugothicui', 'yugothicmedium', 'yugothicuiregular', 'yugothicregular',
+# # 'yugothicuisemilight', 'holomdl2assets']
+#
+# import pygame
+#
+# pygame.init()
+#
+# f_sys = pygame.font.SysFont('tahoma', 20)
+# # my_font = pygame.font.Font('font/comic.ttf', 25)  # чтобы установить свой шрифт
+
+# # для подключаемых шрифтов
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# f_sys = pygame.font.Font('fonts/tahoma.ttf', 20) # создаем ссылку на класс font
+# text = f_sys.render('Text in the window', 1, GREEN, BLUE)  # формируется поверхность, на которой пишется текст,
+# # 1 - значит текст сглаженный, цвет текста, цвет фона
+# text_pos = text.get_rect(center=(W // 2, H // 2)) # отображение поверхности с текстом
+#
+# sc.fill(RED)
+# sc.blit(text, text_pos)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
