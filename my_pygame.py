@@ -863,3 +863,73 @@
 #             exit()
 #
 #     clock.tick(FPS)
+
+# # если необходимо отобразить стандартный текст
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# f_sys = pygame.font.SysFont('tahoma', 20)
+# text = f_sys.render('Text in the window', 1, GREEN, BLUE)
+# text_pos = text.get_rect(center=(W // 2, H // 2))
+#
+# sc.fill(RED)
+# sc.blit(text, text_pos)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+
+# # пример перемещения текста зависимо от мышки
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# f_sys = pygame.font.SysFont('tahoma', 20)
+# text = f_sys.render('Text in the window', 1, GREEN, BLUE)
+# text_pos = text.get_rect(center=(W // 2, H // 2))
+#
+# def draw_text():
+#     sc.fill(RED)
+#     sc.blit(text, text_pos)
+#     pygame.display.update()
+#
+# draw_text()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+#             pygame.mouse.get_rel()  # обнуляем первое смещение  (при повторном вызове ниже)
+#
+#     if pygame.mouse.get_focused() and text_pos.collidepoint(pygame.mouse.get_pos()):
+#         btns = pygame.mouse.get_pressed()
+#         if btns[0]:  # нажата левая кнопка мыши
+#             rel = pygame.mouse.get_rel()  # получаем позицию смещения
+#             text_pos.move_ip(rel)
+#             draw_text()
+#
+#     clock.tick(FPS)
