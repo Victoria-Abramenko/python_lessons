@@ -933,3 +933,169 @@
 #             draw_text()
 #
 #     clock.tick(FPS)
+
+# _____________________   работа с изображениями в pygame   ________________
+# родной формат графических изображений - bmp (несжатые пиксели - занимают много места)
+# png - сжатие без потерь
+# jpg - сжатие с потерями
+# чтобы проверить, поддерживает ли на данном устройстве pygame другие форматы, используется функция get_extended()
+# возвращает True / False
+# для фотореалистичных изображений используется jpg
+# png для изображений без фона, для однотонных областей
+
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# print(pygame.image.get_extended())
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#
+#     clock.tick(FPS)
+# # True
+
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# ufo_surf = pygame.image.load('img/ufo.JPG')  # загрузка изображения, возвращает поверхность, на которой отображено это изображение
+# ufo_rect = ufo_surf.get_rect(center=(W // 2, H // 2))  # располагаем по центру экрана
+#
+# sky_surf = pygame.image.load('img/sky.JPG')
+# sc.blit(sky_surf, (0, 0))
+#
+# sc.blit(ufo_surf, ufo_rect)  # отобразить изображение в клиентском окне
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+
+# # в pygame можно задать белый цвет прозрачным при помощи set_colorkey((255, 255, 255))
+# import pygame
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# ufo_surf = pygame.image.load('img/ufo.JPG').convert_alpha() # конвертация изображения в стандартный формат (alfa, так как используется прозрачность)
+# sky_surf = pygame.image.load('img/sky.JPG').convert()
+#
+# ufo_rect = ufo_surf.get_rect(center=(W // 2, H // 2))
+# ufo_surf.set_colorkey((255, 255, 255))  # указываем цвет, который сделать прозрачным
+#
+# sc.blit(sky_surf, (0, 0))  # blit преобразует пиксели перед тем, как отобразит на поверхности, чтобы сэкономить
+# # время на конвертацию, можно провести ее сразу при загрузке изображения
+# sc.blit(ufo_surf, ufo_rect)
+# pygame.display.update()
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     clock.tick(FPS)
+#
+# # для работы над изображением - его трансформации, используется модуль transform
+# # масштабирование transform.scale(поверхность, (желаемая ширина, высота)) - возвращает новую отмасштабированную поверхность
+# import pygame
+# from pygame import K_LEFT, K_RIGHT, K_DOWN
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# ufo_surf = pygame.image.load('img/ufo.JPG').convert_alpha()
+# sky_surf = pygame.image.load('img/sky.JPG').convert()
+#
+# ufo_surf.set_colorkey((255, 255, 255))
+#
+# # отрисуем изображение в разных ракурсах, использую вращение
+# ufo_up = ufo_surf
+# ufo_down = pygame.transform.flip(ufo_surf, 0, 1) # отзеркаливание по y
+# ufo_left = pygame.transform.rotate(ufo_surf, 90)
+# ufo_right = pygame.transform.rotate(ufo_surf, -90)
+#
+#
+# ufo_surf = pygame.transform.scale(ufo_surf, (ufo_surf.get_width() // 3, ufo_surf.get_height() // 3)) # уменьшим изображение в 3 раза
+#
+# ufo_rect = ufo_surf.get_rect(center=(W // 2, H // 2))
+#
+#
+# ufo = ufo_up  # текущее изображение персонажа - по умолчанию вверх
+# speed = 10
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#     bt = pygame.key.get_pressed()
+#     if bt[pygame.K_LEFT]:
+#         ufo = ufo_left  # используем изображение персонажа повернутого влево
+#         ufo_rect.x -= speed  # смещаем по оси x на значение скорости
+#         if ufo_rect.x < 0:  # чтобы персонаж не выходил за пределы окна
+#             ufo_rect.x = 0
+#
+#     elif bt[pygame.K_RIGHT]:
+#         ufo = ufo_right
+#         ufo_rect.x += speed
+#         if ufo_rect.x > W - ufo_rect.width:
+#             ufo_rect.x = W - ufo_rect.width
+#
+#     elif bt[pygame.K_UP]:
+#         ufo = ufo_up
+#         ufo_rect.y -= speed
+#         if ufo_rect.y < 0:
+#             ufo_rect.y = 0
+#
+#     elif bt[pygame.K_DOWN]:
+#         ufo = ufo_up
+#         ufo_rect.y += speed
+#         if ufo_rect.y > H - ufo_rect.height:
+#             ufo_rect.y = H - ufo_rect.height
+#
+#     sc.blit(sky_surf, (0, 0))
+#     sc.blit(ufo_surf, ufo_rect)
+#
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
