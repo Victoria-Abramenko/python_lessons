@@ -1099,3 +1099,182 @@
 #     pygame.display.update()
 #
 #     clock.tick(FPS)
+
+# ___________  спрайты - sprite  _____________________
+# спрайт - любой подвижный объект. pygame.sprite ветка для работы с подвижными объектами
+# для создания класса таких объектов используется класс Sprite модуля sprite
+# создадим такой класс в отдельном модуле
+# import pygame
+# from additional_modul import Ball # подключаем созданный модуль
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# bg = pygame.image.load('img/sky.JPG')
+#
+# speed = 2
+# # создаем экземпляр класса
+# b1 = Ball(W // 2, speed, 'img/ball.png')  # передаем расположение по иксу и путь к файлу
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     sc.blit(bg, (0, 0))
+#     sc.blit(b1.image, b1.rect)
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
+#
+#     # if b1.rect.y < H - 50:  # создаем эффект падения мяча, но реализовывать логику падения в главном цикле - плохая практика, лучше реализовать ее в классе (в модуле)
+#     #     b1.rect.y += speed
+#     # else:
+#     #     b1.rect.y = 0
+#
+#     b1.update(H)
+
+# # работа с несколькими спрайтами
+# import pygame
+# from additional_modul import Ball # подключаем созданный модуль
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# bg = pygame.image.load('img/sky.JPG')
+#
+# speed = 2
+# # создаем экземпляр класса
+# b1 = Ball(W // 2, speed, 'img/ball.png')  # передаем расположение по иксу и путь к файлу
+# b2 = Ball(W // 2 - 250, 3, 'img/ball.png')
+# b3 = Ball(W // 2 + 100, 4, 'img/ball.png')
+#
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     sc.blit(bg, (0, 0))
+#     sc.blit(b1.image, b1.rect)
+#     sc.blit(b2.image, b2.rect)
+#     sc.blit(b3.image, b3.rect)
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
+#
+#     b1.update(H)
+#     b2.update(H)
+#     b3.update(H)
+#
+# # чтобы избежать дублирование кода - спрайты объединяют в группу и обрабатывают единым образом - при помощи класса Group()
+# import pygame
+# from additional_modul import Ball
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# bg = pygame.image.load('img/sky.JPG')
+#
+# speed = 2
+# balls = pygame.sprite.Group() # создаем группу
+# # # 1 способ - добавлять в группу по 1 шару
+# # balls.add(Ball(W // 2, speed, 'img/ball.png'))
+# # balls.add(Ball(W // 2 - 250, 3, 'img/ball.png'))
+# # balls.add(Ball(W // 2 + 100, 4, 'img/ball.png'))
+# # # 2 способ - указать все шары через запятую
+# balls.add(Ball(W // 2, speed, 'img/ball.png'),
+#           Ball(W // 2 - 250, 3, 'img/ball.png'),
+#           Ball(W // 2 + 100, 4, 'img/ball.png'))
+#
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#     sc.blit(bg, (0, 0))
+#     balls.draw(sc) # вместо blit вызываем метод draw для группы и указываем плоскость
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
+#
+#     balls.update(H)  # метод также вызывается для группы
+
+# изменим игру, сделаем так, чтобы шары появлялись каждые 2 секунды
+import pygame
+from additional_modul import Ball
+from random import randint
+
+pygame.init()
+
+W,H = 600, 400
+sc = pygame.display.set_mode((W, H))
+FPS = 60
+clock = pygame.time.Clock()
+
+pygame.time.set_timer(pygame.USEREVENT, 2000) # создаем функцию, которая каждые 2000 миллисекунд (2 сек) будет генерировать событие USEREVENT
+
+balls_images = ['ball_1.png', 'ball_2.png', 'ball_3.png'] # создаем коллекцию названий изображений шаров
+balls_surf = [pygame.image.load('img/' + path).convert_alpha() for path in balls_images]# загружаем эти изображения при помощи генератора списка
+
+def createBall(group): # создаем вспомогательную функцию, которая будет создавать новый шар со случайными значениями
+    indx = randint(0, len(balls_surf) - 1)
+    x = randint(20, W - 50)
+    speed = randint(1, 4)
+    
+    return Ball(x, speed, balls_surf[indx], group)
+
+bg = pygame.image.load('img/sky.JPG')
+
+speed = 2
+balls = pygame.sprite.Group()
+
+
+GREEN = (35, 41, 26)
+BLUE = (54, 158, 180)
+RED = (250, 100, 190)
+
+createBall(balls) # для создания первого шара
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+
+        elif event.type == pygame.USEREVENT: # как только появилось это событие (каждые 2 сек)
+            createBall(balls) # будет генерироваться новый мяч
+
+
+    sc.blit(bg, (0, 0))
+    balls.draw(sc)
+    pygame.display.update()
+
+    clock.tick(FPS)
+
+    balls.update(H)
+
