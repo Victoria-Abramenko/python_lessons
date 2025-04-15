@@ -1226,55 +1226,149 @@
 #     balls.update(H)  # метод также вызывается для группы
 
 # изменим игру, сделаем так, чтобы шары появлялись каждые 2 секунды
-import pygame
-from additional_modul import Ball
-from random import randint
+# import pygame
+# from additional_modul import Ball
+# from random import randint
+#
+# pygame.init()
+#
+# W,H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# pygame.time.set_timer(pygame.USEREVENT, 2000) # создаем функцию, которая каждые 2000 миллисекунд (2 сек) будет генерировать событие USEREVENT
+#
+# balls_images = ['ball_1.png', 'ball_2.png', 'ball_3.png'] # создаем коллекцию названий изображений шаров
+# balls_surf = [pygame.image.load('img/' + path).convert_alpha() for path in balls_images]# загружаем эти изображения при помощи генератора списка
+#
+# def createBall(group): # создаем вспомогательную функцию, которая будет создавать новый шар со случайными значениями
+#     indx = randint(0, len(balls_surf) - 1)
+#     x = randint(20, W - 50)
+#     speed = randint(1, 4)
+#
+#     return Ball(x, speed, balls_surf[indx], group)
+#
+# bg = pygame.image.load('img/sky.JPG')
+#
+# speed = 2
+# balls = pygame.sprite.Group()
+#
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# createBall(balls) # для создания первого шара
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.USEREVENT: # как только появилось это событие (каждые 2 сек)
+#             createBall(balls) # будет генерироваться новый мяч
+#
+#
+#     sc.blit(bg, (0, 0))
+#     balls.draw(sc)
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
+#
+#     balls.update(H)
 
-pygame.init()
 
-W,H = 600, 400
-sc = pygame.display.set_mode((W, H))
-FPS = 60
-clock = pygame.time.Clock()
-
-pygame.time.set_timer(pygame.USEREVENT, 2000) # создаем функцию, которая каждые 2000 миллисекунд (2 сек) будет генерировать событие USEREVENT
-
-balls_images = ['ball_1.png', 'ball_2.png', 'ball_3.png'] # создаем коллекцию названий изображений шаров
-balls_surf = [pygame.image.load('img/' + path).convert_alpha() for path in balls_images]# загружаем эти изображения при помощи генератора списка
-
-def createBall(group): # создаем вспомогательную функцию, которая будет создавать новый шар со случайными значениями
-    indx = randint(0, len(balls_surf) - 1)
-    x = randint(20, W - 50)
-    speed = randint(1, 4)
-    
-    return Ball(x, speed, balls_surf[indx], group)
-
-bg = pygame.image.load('img/sky.JPG')
-
-speed = 2
-balls = pygame.sprite.Group()
-
-
-GREEN = (35, 41, 26)
-BLUE = (54, 158, 180)
-RED = (250, 100, 190)
-
-createBall(balls) # для создания первого шара
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
-
-        elif event.type == pygame.USEREVENT: # как только появилось это событие (каждые 2 сек)
-            createBall(balls) # будет генерироваться новый мяч
-
-
-    sc.blit(bg, (0, 0))
-    balls.draw(sc)
-    pygame.display.update()
-
-    clock.tick(FPS)
-
-    balls.update(H)
-
+# # __________   обработка столкновений  __________
+# # в классе Rect есть специальные методы
+# # collidepoint(x, y) - проверка попадания точки в прямоугольник
+# # colliderect(Rect) - проверка пересечения двух прямоугольников
+# # collidelist(list) - проверка пересечения хотя бы одним прямоугольником из списка
+# # collidelistall(list) - проверка пересечения со всеми прямоугольниками из списка
+# import pygame
+# from additional_modul import Ball
+# from random import randint
+#
+# pygame.init()
+#
+# W, H = 600, 400
+# sc = pygame.display.set_mode((W, H))
+# FPS = 60
+# clock = pygame.time.Clock()
+#
+# pygame.time.set_timer(pygame.USEREVENT,2000)
+#
+# score_surf = pygame.image.load('img/chest.png').convert_alpha()
+# font_score = pygame.font.SysFont('tahoma', 20)
+#
+# basket_surf = pygame.image.load('img/basket.png').convert_alpha()
+# basket_rect = basket_surf.get_rect(centerx=W//2, bottom=H-5) # размещаем корзину внизу
+#
+# balls_data = ({'path':'ball_1.png', 'score' : 100},
+#               {'path':'ball_2.png', 'score' : 150},
+#               {'path':'ball_3.png', 'score' : 200})
+#
+# balls_images = ['ball_1.png', 'ball_2.png', 'ball_3.png']
+# balls_surf = [pygame.image.load('img/' + data['path']).convert_alpha() for data in balls_data]
+#
+#
+# def createBall(group):
+#     indx = randint(0, len(balls_surf) - 1)
+#     x = randint(20, W - 50)
+#     speed = randint(1, 4)
+#
+#     return Ball(x, speed, balls_surf[indx], balls_data[indx]['score'], group)
+#
+# game_score = 0
+# def collideBalls():
+#     global game_score
+#     for ball in balls:
+#         if basket_rect.collidepoint(ball.rect.center):
+#             game_score += ball.score
+#             ball.kill()
+#
+#
+# bg = pygame.image.load('img/sky.JPG')
+#
+# speed = 10  # теперь это скорость корзины
+# balls = pygame.sprite.Group()
+#
+# GREEN = (35, 41, 26)
+# BLUE = (54, 158, 180)
+# RED = (250, 100, 190)
+#
+# createBall(balls)
+#
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             exit()
+#
+#         elif event.type == pygame.USEREVENT:
+#             createBall(balls)
+#
+#     keys = pygame.key.get_pressed()
+#     if keys[pygame.K_LEFT]:
+#         basket_rect.x -= speed
+#         if basket_rect.x < 0:
+#             basket_rect.x = 0
+#
+#     elif keys[pygame.K_RIGHT]:
+#         basket_rect.x += speed
+#         if basket_rect.x > W - basket_rect.width:
+#             basket_rect.x = W - basket_rect.width
+#
+#     collideBalls()
+#
+#     sc.blit(bg, (0, 0))
+#     sc.blit(score_surf, (0, 0))
+#     text_score = font_score.render(str(game_score), 1, (255, 255, 255))
+#     sc.blit(text_score, (30, 20))
+#
+#     balls.draw(sc)
+#     sc.blit(basket_surf, basket_rect)
+#     pygame.display.update()
+#
+#     clock.tick(FPS)
+#
+#     balls.update(H)
