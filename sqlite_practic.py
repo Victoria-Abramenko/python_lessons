@@ -41,3 +41,14 @@
 #         old INTEGER,
 #         score INTEGER
 #     )""")
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     # cur.execute("""INSERT INTO players (name, sex, old, score) VALUES ('Ксения', 2, 42, 100)""")
+#     cur.execute("""SELECT * FROM players WHERE score > 500
+#         ORDER BY score DESC""")
+#     # resault = cur.fetchall()
+#     for resault in cur:
+#         print(resault)
