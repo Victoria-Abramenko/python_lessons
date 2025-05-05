@@ -52,3 +52,13 @@
 #     # resault = cur.fetchall()
 #     for resault in cur:
 #         print(resault)
+#
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute('''CREATE TABLE IF NOT EXISTS games (
+#         user_id INTEGER,
+#         name TEXT NOT NULL,
+#         score INTEGER
+#     )''')
