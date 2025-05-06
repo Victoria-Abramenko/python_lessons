@@ -62,3 +62,44 @@
 #         name TEXT NOT NULL,
 #         score INTEGER
 #     )''')
+
+#
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con_db:
+#     cur = con_db.cursor()
+#     cur.execute("DROP TABLE IF EXISTS players")
+#     cur.execute("DROP TABLE IF EXISTS games")
+#     cur.execute("""CREATE TABLE IF NOT EXISTS games (
+#         user_id INTEGER,
+#         score INTEGER,
+#         time INTEGER
+#     )""")
+#     cur.execute("""CREATE TABLE IF NOT EXISTS players (
+#         name TEXT NOT NULL,
+#         sex INTEGER NOT NULL DEFAULT 1,
+#         old INTEGER,
+#         score INTEGER
+#     )""")
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""SELECT name, sex, games.score FROM games JOIN players ON games.user_id = players.ROWID""")
+#     resault = cur.fetchall()
+#     print(resault)
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""SELECT name, sex, sum(games.score) as sum
+#         FROM games
+#         JOIN players ON games.user_id = players.ROWID
+#         GROUP BY user_id
+#         ORDER BY sum DESC
+#         """)
+#     resault = cur.fetchall()
+#     print(resault)

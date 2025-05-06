@@ -3078,28 +3078,37 @@ counter = 0
 while counter < 10:
     i = random.randint(0, N)
     j = random.randint(0, N)
-    if i == 0:
-        if sum(P[i][j - 1: j + 1]) + sum(P[i + 1][j - 1: j + 1]) == 0:
-            P[i][j] = 1
-            counter += 1
-    elif i == N:
-        if sum(P[i][j - 1: j + 1]) + sum(P[i - 1][j - 1: j + 1]) == 0:
-            P[i][j] = 1
-            counter += 1
-    elif j == 0:
-        if sum(P[i - 1][j: j + 1]) + sum(P[i][j: j + 1]) + sum(P[i + 1][j: j + 1]) == 0:
-            P[i][j] = 1
-            counter += 1
-    elif j == N:
-        if sum(P[i - 1][j - 1: j]) + sum(P[i][j - 1: j]) + sum(P[i + 1][j - 1: j]) == 0:
+    print(P[i - 1: i + 1][j - 1 : j + 1])
+    if i not in (0, N) and j not in (0, N):
+        if sum(P[i - 1: i + 1][j - 1 : j + 1]):
             P[i][j] = 1
             counter += 1
     else:
-        if sum(P[i - 1][j - 1: j + 1]) + sum(P[i][j - 1: j + 1]) + sum(P[i + 1][j - 1: j + 1]) == 0:
-            P[i][j] = 1
-            counter += 1
-
-
+        if i == 0 and j not in (0, N):
+            if sum(P[i: i + 1][j - 1: j + 1]):
+                P[i][j] = 1
+                counter += 1
+        elif i not in (0, N) and j == 0:
+            if sum(P[i - 1: i + 1][j: j + 1]):
+                P[i][j] = 1
+                counter += 1
+        elif i == N and j not in (0, N):
+            if sum(P[i - 1: i][j - 1: j + 1]):
+                P[i][j] = 1
+                counter += 1
+        elif i not in (0, N) and j == N:
+            if sum(P[i - 1: i + 1][j - 1: j]):
+                P[i][j] = 1
+                counter += 1
+        elif i == 0 and j == 0:
+            if sum(P[i: i + 1][j: j + 1]):
+                P[i][j] = 1
+                counter += 1
+        elif i == N and j == N:
+            if sum(P[i - 1: i][j - 1: j]):
+                P[i][j] = 1
+                counter += 1
+#
 
 
 # # ------  решение другого ученика  ------
@@ -3113,3 +3122,72 @@ while counter < 10:
 #         P[f][j] = 1
 #         k += 1
 
+
+# # ________________    Задание 332    ____________________
+# # Пользователь может ввести с клавиатуры следующие команды в виде строки:
+# # top или Top или TOP
+# # bottom или Bottom или BOTTOM
+# # right или Right или RIGHT
+# # left или Left или LEFT
+# # cmd = input()
+# # С помощью оператора match/case необходимо определить тип команды cmd и при совпадении вывести на экран сообщение в формате:
+# # Команда <название команды малыми буквами>
+# # Например, при вводе Top, должны на выходе получить:
+# # Команда top
+# # И так для всех четырех команд. Если тип команды не определен, то вывести строку:
+# # Неверная команда
+# cmd = input()
+#
+# match cmd:
+#     case 'top' | 'Top' | 'TOP':
+#         (print(f'Команда {cmd.lower()}'))
+#     case 'bottom' | 'Bottom' | 'BOTTOM':
+#         (print(f'Команда {cmd.lower()}'))
+#     case 'right' | 'Right' | 'RIGHT':
+#         (print(f'Команда {cmd.lower()}'))
+#     case 'left' | 'Left' | 'LEFT':
+#         (print(f'Команда {cmd.lower()}'))
+#     case _:
+#         print('Неверная команда')
+
+
+# # ________________    Задание 333    ____________________
+# # В функцию get_data() передается параметр value:
+# # def get_data(value):
+# #     match value:
+# #         # здесь продолжайте программу
+# #     return None
+# # Необходимо дописать оператор match/case в этой функции так, чтобы для каждого типа данных (int, float и str) формировалась переменная со значением value и возвращалась функцией (непосредственно из блока case).
+# # P. S. Вызывать функцию не нужно, только дописать.
+# def get_data(value):
+#     match value:
+#         case int():
+#             return int(value)
+#         case float():
+#             return float(value)
+#         case str():
+#             return str(value)
+#     return None
+
+
+# # ________________    Задание 334    ____________________
+# # В функцию get_data() передается параметр value:
+# # def get_data(value):
+# #     match value:
+# #         # здесь продолжайте программу
+# #     return None
+# # Необходимо дописать оператор match/case со следующими шаблонами:
+# # если переменная value имеет тип int и больше нуля, то вернуть значение переменной value;
+# # если переменная value имеет тип float и находится в диапазоне [-100; 100], то вернуть значение переменной value;
+# # если переменная value имеет тип str, то просто вернуть ее значение.
+# # P. S. Вызывать функцию не нужно, только дописать шаблоны.
+# def get_data(value):
+#     match value:
+#         case int() if value > 0:
+#             return value
+#         case float() if -100 <= value <= 100:
+#             return value
+#         case str():
+#             return value
+#
+#     return None
