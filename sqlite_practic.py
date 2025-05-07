@@ -103,3 +103,46 @@
 #         """)
 #     resault = cur.fetchall()
 #     print(resault)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con_db:
+#     cur = con_db.cursor()
+#     cur.execute("""CREATE TABLE IF NOT EXISTS tab1 (
+#         score INTEGER,
+#         `from` TEXT
+#     )""")
+#     cur.execute("""CREATE TABLE IF NOT EXISTS tab2 (
+#         val INTEGER,
+#         type TEXT
+#     )""")
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""SELECT score, `from` FROM tab1 UNION SELECT val, `type` FROM tab2""")
+#     resault = cur.fetchall()
+#     print(resault)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""UPDATE tab1 SET `from` = 'tab2'""")
+#     cur.execute("""SELECT score, `from` FROM tab1 UNION SELECT val, `type` FROM tab2""")
+#     resault = cur.fetchall()
+#     print(resault)
+
+#
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#     cur.execute("""UPDATE tab1 SET `from` = 'tab1'""")
+#     cur.execute("""SELECT score, 'table 1' as tbl FROM tab1 UNION SELECT val, 'table 2' FROM tab2 ORDER BY score DESC""")
+#     resault = cur.fetchall()
+#     print(resault)

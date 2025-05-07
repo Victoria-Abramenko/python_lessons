@@ -3070,45 +3070,74 @@
 # P = counter_ab()
 # print(P)
 
+# import random
+# random.seed(1)
+# N = int(input())
+# P = [[0] * N for i in range(N)]
+# counter = 0
+# while counter < 10:
+#     i = random.randint(0, N)
+#     j = random.randint(0, N)
+#     try:
+#         if sum(P[i - 1][j - 1] + P[i][j - 1] + P[i + 1][j - 1] + P[i - 1][j] + P[i][j] + P[i + 1][j] + P[i - 1][j + 1] + P[i][j + 1] + P[i + 1][j + 1]) < 1:
+#             P[i][j] = 1
+#             counter += 1
+#         else:
+#             i = random.randint(0, N)
+#             j = random.randint(0, N)
+#     except:
+#
+#         continue
+#
+# [print(i) for i in P]
+
+# import random
+# random.seed(1)
+# N = int(input())
+# P = [[0] * (N + 2) for i in range(N)]
+# counter = 0
+#
+# while counter < 10:
+#     i = random.randint(1, N + 1)
+#     j = random.randint(1, N + 1)
+#
+#     try:
+#         if not any([P[i - 1][j - 1], P[i][j - 1], P[i + 1][j - 1], P[i - 1][j], P[i][j], P[i + 1][j], P[i - 1][j + 1], P[i][j + 1], P[i + 1][j + 1]]):
+#             P[i][j] = 1
+#             counter += 1
+#         else:
+#             continue
+#     except:
+#         continue
+# P = [j
+#      for i in range(len(P)) if 0 < i < len(P)
+#      for j in range(len(P)) if 0 < j < len(P)]
+#
+# [print(i) for i in P]
+
 import random
 random.seed(1)
 N = int(input())
-P = [[0] * N for i in range(N)]
+P = [[0] * (N + 2) for i in range(N)]
 counter = 0
+
 while counter < 10:
-    i = random.randint(0, N)
-    j = random.randint(0, N)
-    print(P[i - 1: i + 1][j - 1 : j + 1])
-    if i not in (0, N) and j not in (0, N):
-        if sum(P[i - 1: i + 1][j - 1 : j + 1]):
+    i = random.randint(1, N + 1)
+    j = random.randint(1, N + 1)
+
+    try:
+        if not any([P[i - 1][j - 1], P[i][j - 1], P[i + 1][j - 1], P[i - 1][j], P[i][j], P[i + 1][j], P[i - 1][j + 1], P[i][j + 1], P[i + 1][j + 1]]):
             P[i][j] = 1
             counter += 1
-    else:
-        if i == 0 and j not in (0, N):
-            if sum(P[i: i + 1][j - 1: j + 1]):
-                P[i][j] = 1
-                counter += 1
-        elif i not in (0, N) and j == 0:
-            if sum(P[i - 1: i + 1][j: j + 1]):
-                P[i][j] = 1
-                counter += 1
-        elif i == N and j not in (0, N):
-            if sum(P[i - 1: i][j - 1: j + 1]):
-                P[i][j] = 1
-                counter += 1
-        elif i not in (0, N) and j == N:
-            if sum(P[i - 1: i + 1][j - 1: j]):
-                P[i][j] = 1
-                counter += 1
-        elif i == 0 and j == 0:
-            if sum(P[i: i + 1][j: j + 1]):
-                P[i][j] = 1
-                counter += 1
-        elif i == N and j == N:
-            if sum(P[i - 1: i][j - 1: j]):
-                P[i][j] = 1
-                counter += 1
-#
+        else:
+            continue
+    except:
+        continue
+
+
+[print(i) for i in P]
+
+
 
 
 # # ------  решение другого ученика  ------
@@ -3191,3 +3220,72 @@ while counter < 10:
 #             return value
 #
 #     return None
+
+
+# # ________________    Задание 335    ____________________
+# # Вводятся данные по книге в виде строки через запятую в формате (некоторые значения могут отсутствовать):
+# # id, автор, название, цена, год издания
+# # с помощью команд:
+# # t = (int, str, str, float, int)
+# # book = [t[i](x) if t[i] != str else x.strip() for i, x in enumerate(input().split(","))]
+# # Например, при вводе:
+# # "1, Балакирев С.М., Python, 2100, 2023"
+# # получим список:
+# # book = [1, 'Балакирев С.М.', 'Python', 2100.0, 2023]
+# # А при вводе:
+# # "1, Балакирев С.М., Python"
+# # список:
+# # book = [1, 'Балакирев С.М.', 'Python']
+# # И так далее.
+# # С помощью оператора match/case необходимо определить шаблоны для выделения следующей информации:
+# # автор, название
+# # автор, название, цена
+# # автор, название, цена, год издания
+# # Первый шаблон срабатывает, если есть только автор и название; второй, если появляется еще и цена; третий, если имеются все данные.
+# # При срабатывании шаблона вывести на экран строку "Yes". Если ни один из шаблонов не сработал, то вывести строку "No".
+# t = (int, str, str, float, int)
+# book = [t[i](x) if t[i] != str else x.strip() for i, x in enumerate(input().split(","))]
+# match book:
+#     case _, author, title:
+#         print("Yes")
+#     case _, author, title, price:
+#         print("Yes")
+#     case _, author, title, price, year:
+#         print("Yes")
+#     case _:
+#         print("No")
+
+
+# # ________________    Задание 336    ____________________
+# # Вводятся данные по книге в виде строки через запятую в формате (некоторые значения могут отсутствовать):
+# # id, автор, название, цена, год издания
+# # с помощью команд:
+# # t = (int, str, str, float, int)
+# # book = [t[i](x) if t[i] != str else x.strip() for i, x in enumerate(input().split(","))]
+# # Например, при вводе:
+# # "1, Балакирев С.М., Python, 2100, 2023"
+# # получим список:
+# # book = [1, 'Балакирев С.М.', 'Python', 2100.0, 2023]
+# # А при вводе:
+# # "1, Балакирев С.М., Python"
+# # список:
+# # book = [1, 'Балакирев С.М.', 'Python']
+# # И так далее.
+# # С помощью оператора match/case необходимо определить шаблоны для выделения следующей информации с дополнительными проверками:
+# # автор, название (автор - не менее 6 символов, название - не менее 10 символов)
+# # автор, название, цена (автор не менее 6 символов, цена - положительное число)
+# # автор, название, год издания (год издания от 2020 и выше)
+# # автор, название, цена, год издания (цена - положительное число и год издания от 2020 и выше)
+# # Первый шаблон срабатывает, если есть только автор и название; второй, если появляется еще и цена; третий, если есть автор, название, год издания, но нет цены; последний, если имеются все данные.
+# # При срабатывании шаблона вывести на экран строку "Yes". Если ни один из шаблонов не сработал, то вывести строку "No".
+# t = (int, str, str, float, int)
+# book = [t[i](x) if t[i] != str else x.strip() for i, x in enumerate(input().split(","))]
+# match book:
+#     case (_, author, title) if len(author) >= 6 and len(title) >= 10:
+#         print("Yes")
+#     case (_, author, title, price) if len(author) >= 6 and price > 0:
+#         print("Yes")
+#     case (_, author, title, price, year) if price > 0 and year > 2020:
+#         print("Yes")
+#     case _:
+#         print("No")
