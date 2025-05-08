@@ -3031,125 +3031,104 @@
 # P = [[0] * N for i in range(N)]
 # Требуется расставить на поле P случайным образом M = 10 единиц (целочисленных) так, чтобы они не соприкасались друг с другом (то есть, вокруг каждой единицы должны быть нули, либо граница поля).
 # P.S. Поле на экран выводить не нужно (вообще ничего не нужно выводить), только сформировать.
-# # не прошло проверку
-# import random
-# N = int(input())
-# P = [[0] * N for i in range(N)]
-# counter = 0
-#
-# def counter_ab():
-#     global counter
-#     a = random.randint(0, N)
-#     b = random.randint(0, N)
-#     while counter < 10:
-#         if a == 0 and b == 0:
-#             if P[a + 1][b] != 1 and P[a][b + 1] != 1 and P[a][b] != 1:
-#                 P[a][b] = 1
-#                 counter += 1
-#         if a == 0 and b == N:
-#             if P[a + 1][b] != 1 and P[a][b - 1] != 1 and P[a][b] != 1:
-#                 P[a][b] = 1
-#                 counter += 1
-#         if a == N and b == 0:
-#             if P[a - 1][b] != 1 and P[a][b + 1] != 1 and P[a][b] != 1:
-#                 P[a][b] = 1
-#                 counter += 1
-#         if a == N and b == N:
-#             if P[a - 1][b] != 1 and P[a][b - 1] != 1 and P[a][b] != 1:
-#                 P[a][b] = 1
-#                 counter += 1
-#
-#         if P[a][b - 1] != 1 and P[a][b + 1] != 1 and P[a - 1][b] != 1 and P[a + 1][b] != 1 and P[a][b] != 1:
-#             P[a][b] = 1
-#             counter += 1
-#
-#         a = random.randint(1, N - 2)
-#         b = random.randint(1, N - 2)
-#     return P
-#
-# P = counter_ab()
-# print(P)
 
 # import random
 # random.seed(1)
 # N = int(input())
 # P = [[0] * N for i in range(N)]
-# counter = 0
-# while counter < 10:
+#
+# def is_isolate(*args):
+#     lst2D, i, j = args
+#     return lst2D[i][j] + lst2D[i][j + 1] + lst2D[i + 1][j] + lst2D[i + 1][j + 1] > 1
+#
+# def verify(lst2D):
+#
+#     flag = True
+#     for i in range(len(lst2D) - 1):
+#         if flag:
+#             for j in range(len(lst2D) - 1):
+#                 if is_isolate(lst2D, i, j):
+#                     flag = False
+#                     return False
+#
+#         else:
+#             break
+#     if flag:
+#         return True
+#
+#
+# while sum(sum(i) for i in P) !=10:
 #     i = random.randint(0, N)
 #     j = random.randint(0, N)
 #     try:
-#         if sum(P[i - 1][j - 1] + P[i][j - 1] + P[i + 1][j - 1] + P[i - 1][j] + P[i][j] + P[i + 1][j] + P[i - 1][j + 1] + P[i][j + 1] + P[i + 1][j + 1]) < 1:
+#         P[i][j] = 1
+#         if verify(P):
 #             P[i][j] = 1
-#             counter += 1
 #         else:
-#             i = random.randint(0, N)
-#             j = random.randint(0, N)
+#             P[i][j] = 0
 #     except:
-#
 #         continue
-#
-# [print(i) for i in P]
 
+
+# # ------  решение другого ученика  ------
 # import random
+# # установка "зерна" датчика случайных чисел, чтобы получались одни и те же случайные величины
 # random.seed(1)
+# # начальная инициализация поля (переменные P и N не менять, единицы записывать в список P)
 # N = int(input())
-# P = [[0] * (N + 2) for i in range(N)]
-# counter = 0
+# P = [[0] * N for i in range(N)]
 #
-# while counter < 10:
-#     i = random.randint(1, N + 1)
-#     j = random.randint(1, N + 1)
+# # здесь продолжайте программу
+# # создаём список допустимых клеток для размещения единички
+# available = [(i, j) for i in range(N) for j in range(N)]
 #
-#     try:
-#         if not any([P[i - 1][j - 1], P[i][j - 1], P[i + 1][j - 1], P[i - 1][j], P[i][j], P[i + 1][j], P[i - 1][j + 1], P[i][j + 1], P[i + 1][j + 1]]):
-#             P[i][j] = 1
-#             counter += 1
-#         else:
-#             continue
-#     except:
-#         continue
-# P = [j
-#      for i in range(len(P)) if 0 < i < len(P)
-#      for j in range(len(P)) if 0 < j < len(P)]
+# # задаём число единичек
+# count_one = 10
 #
-# [print(i) for i in P]
-
-import random
-random.seed(1)
-N = int(input())
-P = [[0] * (N + 2) for i in range(N)]
-counter = 0
-
-while counter < 10:
-    i = random.randint(1, N + 1)
-    j = random.randint(1, N + 1)
-
-    try:
-        if not any([P[i - 1][j - 1], P[i][j - 1], P[i + 1][j - 1], P[i - 1][j], P[i][j], P[i + 1][j], P[i - 1][j + 1], P[i][j + 1], P[i + 1][j + 1]]):
-            P[i][j] = 1
-            counter += 1
-        else:
-            continue
-    except:
-        continue
-
-
-[print(i) for i in P]
-
+# for k in range(count_one):
+#     # выбираем случайную ячейку под единичку и заносим её в список P
+#     box = random.choice(available)
+#     P[box[0]][box[1]] = 1
+#
+#     # удаляем из списка допустимых клеток все клетки соседствующие с выбранной, в том числе и её саму
+#     for i in range(box[0]-1, box[0]+2):
+#         for j in range(box[1]-1, box[1]+2):
+#             if (i, j) in available:
+#                 available.remove((i, j))
 
 
 
 # # ------  решение другого ученика  ------
-# k = 0
+# import random
+# # установка "зерна" датчика случайных чисел, чтобы получались одни и те же случайные величины
+# random.seed(1)
+# # начальная инициализация поля (переменные P и N не менять, единицы записывать в список P)
+# N = int(input())
+# P = [[0] * N for i in range(N)]
 #
-# while k < 10:
-#     f = random.randint(0, N-1)
-#     j = random.randint(0, N-1)
+# # здесь продолжайте программу
+# count = 0
+# while count < 10:
+#     j, i = (random.randint(0, N - 1) for _ in "ji")
+#     if not P[j][i]:
+#         in_touch = [P[y][x]
+#                     for y in range(j - 1, j + 2) if y in range(N)
+#                     for x in range(i - 1, i + 2) if x in range(N)]
+#         if not any(in_touch):
+#             P[j][i] = 1
+#             count += 1
+
+
+
+# # ------  решение другого ученика  ------
+# from random import randrange, seed
+# seed(1)
+# N = int(input())
+# P = [[0] * N for i in range(N)]
 #
-#     if f % 2 == 0 and j % 2 == 0 and P[f][j] != 1:
-#         P[f][j] = 1
-#         k += 1
+# while sum(map(sum, P)) < 10:
+#     P[randrange(0, N, 2)][randrange(0, N, 2)] = 1
+
 
 
 # # ________________    Задание 332    ____________________
@@ -3289,3 +3268,51 @@ while counter < 10:
 #         print("Yes")
 #     case _:
 #         print("No")
+
+
+
+# # ________________    Задание 337    ____________________
+# # Имеется следующий фрагмент программы с функцией parse_json и словарем json_data:
+# # def parse_json(data):
+# #     match data:
+# #         case {'id': ids, 'data': [_, {'login': login}, _, _]}:
+# #             return ids, login
+# #     return None
+# # json_data = {'id': 2, 'access': False, 'data': ['26.05.2023', {'login': '1234', 'email': 'xxx@mail.com'}, 2000, 56.4]}
+# # С помощью оператора match/case в функцию parse_json добавьте в самое начало шаблон для выделения значения ключа access с проверкой на тип bool и для выделения даты (первое значение списка) из поля data с проверкой, что data является списком. Возвратите выделенные два значения в виде кортежа в формате (access, date).
+# # P. S. В программе нужно только дописать шаблон. Вызывать функцию не нужно.
+# def parse_json(data):
+#     match data:
+#         # здесь прописывайте шаблон
+#         case {'access': bool() as access, 'data': list() as date}:
+#             return access, date[0]
+#         case {'id': ids, 'data': [_, {'login': login}, _, _]}:
+#             return ids, login
+#
+#     return None
+#
+# json_data = {'id': 2, 'access': False, 'data': ['26.05.2023', {'login': '1234', 'email': 'xxx@mail.com'}, 2000, 56.4]}
+
+# # ________________    Задание 338    ____________________
+# # def parse_json(data):
+# #     match data:
+# #         case {'id': ids, 'data': [_, {'login': login}, _, _]}:
+# #             return ids, login
+# #
+# #     return None
+# #
+# # json_data = {'id': 2, 'access': True, 'data': ['26.05.2023', {'login': '1234', 'email': 'xxx@mail.com'}, 2000, 56.4]}
+# # С помощью оператора match/case в функцию parse_json добавьте в самое начало шаблон для выделения значений ключей login и email с проверкой, что они являются строками и при условии, что поле access принимает значение True. Возвратите выделенные два значения в виде кортежа в формате (login, email).
+# #
+# # P. S. В программе нужно только дописать шаблон. Вызывать функцию не нужно.
+# def parse_json(data):
+#     match data:
+#         case {'access': True, 'data': [_, {'login': str() as login, 'email': str() as email}, *_]}:
+#             return login, email
+#
+#         case {'id': ids, 'data': [_, {'login': login}, _, _]}:
+#             return ids, login
+#
+#     return None
+#
+# json_data = {'id': 2, 'access': True, 'data': ['26.05.2023', {'login': '1234', 'email': 'xxx@mail.com'}, 2000, 56.4]}
