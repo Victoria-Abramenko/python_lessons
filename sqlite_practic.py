@@ -226,3 +226,124 @@
 # with sq.connect('lesson.db') as con:
 #     cur = con.cursor()
 #     cur.execute("""DELETE FROM students WHERE old < (SELECT old FROM students WHERE id = 2)""")
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     cur.execute("""CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     )""")
+#
+#     cur.execute("""INSERT INTO cars VALUES (1, 'audi', 254125)""")
+#     cur.execute("""INSERT INTO cars VALUES (2, 'opel', 564125)""")
+#     cur.execute("""INSERT INTO cars VALUES (3, 'skoda', 112125)""")
+#     cur.execute("""INSERT INTO cars VALUES (4, 'volvo', 254565)""")
+#     cur.execute("""INSERT INTO cars VALUES (5, 'mersedes', 1455125)""")
+#     cur.execute("""INSERT INTO cars VALUES (6, 'lada', 25554)""")
+
+# import sqlite3 as sq
+#
+# cars = [
+#     ('kia', 656455),
+#     ('tank', 856458),
+#     ('haval', 268758),
+# ]
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     for car in cars:
+#         cur.execute("""INSERT INTO cars VALUES (NULL, ?, ?)""", car)
+
+
+# import sqlite3 as sq
+#
+# cars = [
+#     ('ford', 54684),
+#     ('honda', 587658),
+#     ('bmw', 6847687),
+# ]
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     cur.executemany("""INSERT INTO cars VALUES (NULL, ?, ?)""", cars)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     cur.execute("UPDATE cars SET price = :Price WHERE model LIKE 'l%'", {'Price': 0})
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     cur.executescript("""DELETE FROM cars WHERE model LIKE 'l%';
+#         UPDATE cars SET price = price + 5000
+#                       """)
+
+
+# import sqlite3 as sq
+#
+# con = None
+# try:
+#     con = sq.connect('lesson.db')
+#     cur = con.cursor()
+#
+#     cur.executescript("""CREATE TABLE IF NOT EXISTS cars (
+#         car_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         model TEXT,
+#         price INTEGER
+#     );
+#     BEGIN;
+#     INSERT INTO cars VALUES (NULL, 'audi', 254125);
+#     INSERT INTO cars VALUES (NULL, 'opel', 564125);
+#     INSERT INTO cars VALUES (NULL, 'skoda', 112125);
+#     INSERT INTO cars VALUES (NULL, 'volvo', 254565);
+#     INSERT INTO cars VALUES (NULL, 'mersedes', 1455125);
+#     INSERT INTO cars VALUES (NULL, 'lada', 25554);
+#     UPDATE cars SET price = price + 5000
+#     """)
+#
+#     con.commit()
+#
+# except sq.Error as er:
+#     if con: con.rollback()
+#     print('Ошибка запроса')
+# finally:
+#     if con: con.close()
+
+
+# import sqlite3 as sq
+#
+# con = None
+# try:
+#     con = sq.connect('lesson.db')
+#     cur = con.cursor()
+#
+#     cur.execute("""CREATE TABLE IF NOT EXISTS cust
+#     (name TEXT, tr_in INTEGER, buy INTEGER)""")
+#
+#     cur.execute("INSERT INTO cars VALUES (NULL, 'запорожец', 1000)")
+#
+#     last_row_id = cur.lastrowid
+#     buy_car_id = 2
+#     cur.execute("INSERT INTO cust VALUES('Федор', ?, ?)", (last_row_id, buy_car_id))
+#
+#     con.commit()
+#
+# except sq.Error as er:
+#     if con: con.rollback()
+#     print('Ошибка запроса')
+# finally:
+#     if con: con.close()
