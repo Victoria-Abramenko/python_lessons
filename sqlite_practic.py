@@ -347,3 +347,139 @@
 #     print('Ошибка запроса')
 # finally:
 #     if con: con.close()
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     cur.execute("""SELECT model, price FROM cars""")
+#
+#     # res = cur.fetchall()
+#     # res = cur.fetchone()
+#     res = cur.fetchmany(4)
+#     print(res)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     con.row_factory = sq.Row
+#     cur = con.cursor()
+#
+#     cur.execute("""SELECT model, price FROM cars""")
+#
+#     # res = cur.fetchall()
+#     # res = cur.fetchone()
+#     res = cur.fetchmany(4)
+#     for elem in res:
+#         print(elem['model'], elem['price'])
+
+
+# import sqlite3 as sq
+#
+#
+# def read_ava(n):
+#     try:
+#         with open(f'img/{n}.JPG', 'rb') as img_file:
+#             return img_file.read()
+#     except IOError as er:
+#         print(er)
+#         return False
+#
+#
+# with sq.connect('lesson.db') as con:
+#     con.row_factory = sq.Row
+#     cur = con.cursor()
+#
+#     cur.execute("""CREATE TABLE IF NOT EXISTS users (name TEXT, ava BLOB, score INTEGER)""")
+#
+#
+#     img = read_ava(1)
+#     if img:
+#         binary = sq.Binary(img)
+#         cur.execute("INSERT INTO users VALUES ('Макс', ?, 1000)", (binary,))
+
+
+#
+# import sqlite3 as sq
+#
+#
+# def read_ava(n):
+#     try:
+#         with open(f'img/{n}.JPG', 'rb') as img_file:
+#             return img_file.read()
+#     except IOError as er:
+#         print(er)
+#         return False
+#
+#
+# def write_ava(name, data):
+#     try:
+#         with open(name, 'wb') as img_file:
+#             img_file.write(data)
+#     except IOError as er:
+#         print(er)
+#         return False
+#
+#     return True
+#
+#
+# with sq.connect('lesson.db') as con:
+#     con.row_factory = sq.Row
+#     cur = con.cursor()
+#
+#     cur.execute("""CREATE TABLE IF NOT EXISTS users (name TEXT, ava BLOB, score INTEGER)""")
+#     cur.execute("SELECT ava FROM users LIMIT 1")
+#     img = cur.fetchone()['ava']
+#
+#     write_ava("output.JPG", img)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     for sql in con.iterdump():
+#         print(sql)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson.db') as con:
+#     cur = con.cursor()
+#
+#     with open('copy_sql_db.sql', 'w') as file:
+#         for sql in con.iterdump():
+#             file.write(sql)
+
+
+# import sqlite3 as sq
+#
+# with sq.connect('lesson1.db') as con:
+#     cur = con.cursor()
+#
+#     with open('copy_sql_db.sql', 'r') as file:
+#         sql = file.read()
+#         cur.executescript(sql)
+
+#
+# import sqlite3 as sq
+#
+# en_ru = [('car', 'машина'), ('tree', 'дерево'), ('color', 'цвет')]
+#
+# con = sq.connect(':memory:')
+# with con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE IF NOT EXISTS dict (eng TEXT, rus TEXT)""")
+#
+#     cur.executemany("INSERT INTO dict VALUES (?, ?)", en_ru)
+#
+#     cur.execute("SELECT rus FROM dict WHERE eng LIKE 'c%'")
+#     res = cur.fetchall()
+#     print(res)
+#
+#
+#
